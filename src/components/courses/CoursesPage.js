@@ -1,52 +1,36 @@
-import * as courseActions from "../../redux/actions/courseActions";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
+import { createCourse } from "../../redux/actions/courseActions";
 
-class CoursesPage extends React.Component {
-    state = {
-        course: {
-            title: ""
-        }
-    };
+export default function CoursesPage() {
+  const dispatch = useDispatch();
+  const courses = useSelector(state => state.courses);
+  const [course, setCourse] = useState({ title: "" });
 
+  const handleChange = event => {
+    setCourse({ ...course, title: event.target.value });
+  };
 
-    handleChange = event => {
-        const course = { ...this.state.course, title: event.target.value };
-        this.setState({ course });
-    }
+  const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(createCourse(course));
+    setCourse({ title: "" });
+  };
 
-    handleSubmit = event => {
-        event.preventDefault();
-        this.props.dispatch(courseActions.createCourse(this.state.course))
-    }
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <h2>Courses</h2>
-                <h3>Add Course</h3>
-                <input
-                    type="text"
-                    onChange={this.handleChange}
-                    value={this.state.course.title}
-                />
-                <input type="submit" value="Save" />
-            </form>
-        );
-    }
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Courses</h2>
+      <h3>Add Course</h3>
+      <input
+        type="text"
+        onChange={() => handleChange(event)}
+        value={course.title}
+      />
+      <input type="submit" value="Save" />
+      {courses.map(course => (
+        <div key={course.title}>{course.title}</div>
+      ))}
+    </form>
+  );
 }
-
-CoursesPage.propTypes = {
-    dispatch: PropTypes.func.isRequired
-}
-
-function mapStateToProps(state) {
-    return {
-        courses: state.courses
-    }
-}
-
-const connectedStateAndProps = connect(mapStateToProps);
-export default connectedStateAndProps(CoursesPage)
