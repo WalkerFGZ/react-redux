@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import CourseForm from "./CourseForm";
+import Spinner from "../common/Spinner";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import { newCourse } from "../../../tools/mockData";
 
@@ -49,7 +50,9 @@ export default function ManageCoursePage() {
       navigate("/courses");
     });
   }
-  return (
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       authors={authors}
       course={course}

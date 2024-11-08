@@ -10,17 +10,7 @@ export default function CoursesPage() {
   const dispatch = useDispatch();
   const courses = useSelector(state => state.courses);
   const authors = useSelector(state => state.authors);
-  // const [course, setCourse] = useState({ title: "" });
-
-  // const handleChange = event => {
-  //   setCourse({ ...course, title: event.target.value });
-  // };
-
-  // const handleSubmit = event => {
-  //   event.preventDefault();
-  //   dispatch(createCourse(course));
-  //   setCourse({ title: "" });
-  // };
+  const loading = useSelector(state => state.apiCallsInProgress > 0);
 
   useEffect(() => {
     if (courses.length > 0) return;
@@ -37,8 +27,6 @@ export default function CoursesPage() {
     authors.length === 0
       ? []
       : courses.map(course => {
-          debugger;
-
           return {
             ...course,
             authorName: authors.find(a => a.id === course.authorId).name || ""
@@ -48,8 +36,7 @@ export default function CoursesPage() {
   return (
     <>
       <h2>Courses</h2>
-      <Spinner />
-      <CourseList courses={coursesWithAuthors} />
+      {loading ? <Spinner /> : <CourseList courses={coursesWithAuthors} />}
     </>
   );
 }
