@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import CourseList from "./CourseList";
+import Spinner from "../common/Spinner";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import { loadCourses } from "../../redux/actions/courseActions";
 
@@ -47,6 +48,7 @@ export default function CoursesPage() {
   return (
     <>
       <h2>Courses</h2>
+      <Spinner />
       <CourseList courses={coursesWithAuthors} />
     </>
   );
