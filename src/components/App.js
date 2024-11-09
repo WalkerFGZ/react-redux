@@ -1,3 +1,5 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { Route, Routes } from "react-router-dom";
 
 import AboutPage from "./about/AboutPage";
@@ -7,6 +9,7 @@ import HomePage from "./home/HomePage";
 import ManageCoursePage from "./courses/ManageCoursePage";
 import PageNotFound from "./PageNotFound";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
@@ -19,6 +22,7 @@ export default function App() {
         <Route path="/course/:slug?" element={<ManageCoursePage />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer autoClose={3000} hideProgressBar theme="colored" />
     </div>
   );
 }

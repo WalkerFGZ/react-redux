@@ -5,8 +5,10 @@ import CourseList from "./CourseList";
 import Spinner from "../common/Spinner";
 import { loadAuthors } from "../../redux/actions/authorActions";
 import { loadCourses } from "../../redux/actions/courseActions";
+import { useNavigate } from "react-router-dom";
 
 export default function CoursesPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const courses = useSelector(state => state.courses);
   const authors = useSelector(state => state.authors);
@@ -36,6 +38,9 @@ export default function CoursesPage() {
   return (
     <>
       <h2>Courses</h2>
+      <button className="btn btn-primary" onClick={() => navigate("/course")}>
+        Add Course
+      </button>
       {loading ? <Spinner /> : <CourseList courses={coursesWithAuthors} />}
     </>
   );
