@@ -6,7 +6,7 @@ import ManageCoursePage from "./ManageCoursePage";
 import { Provider } from "react-redux";
 import React from "react";
 import { enableFetchMocks } from "jest-fetch-mock";
-import store from "../../redux/reducers/configureStore";
+import store from "../../redux/configureStore";
 
 enableFetchMocks();
 
